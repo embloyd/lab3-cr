@@ -4,7 +4,7 @@ package fixed;
  * Неизменяемая сущность, описывающая математическую дробь.
  * Поддерживает арифметические операции и приведение к Number.
  */
-public final class Fraction extends Number {
+final class Fraction extends Number {
 
     /** Числитель дроби (неизменяемый). */
     private final int numerator;
@@ -27,16 +27,13 @@ public final class Fraction extends Number {
                     "Знаменатель не может быть 0"
             );
         }
-        // переносим знак в числитель
         int num = numerator;
         int den = denominator;
         if (den < 0) {
             num = -num;
             den = -den;
         }
-        // вычисляем НОД для упрощения
         final int gcd = gcd(Math.abs(num), den);
-        // присваиваем упрощённые значения
         this.numerator = num / gcd;
         this.denominator = den / gcd;
     }
@@ -66,7 +63,6 @@ public final class Fraction extends Number {
     private int gcd(final int a, final int b) {
         int x = a;
         int y = b;
-        // алгоритм евклида
         while (y != 0) {
             final int t = y;
             y = x % y;
@@ -174,7 +170,6 @@ public final class Fraction extends Number {
         return divide(new Fraction(n, 1));
     }
 
-    // реализация абстрактных методов Number
 
     @Override
     public final int intValue() {

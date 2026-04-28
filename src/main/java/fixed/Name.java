@@ -4,7 +4,7 @@ package fixed;
  * Неизменяемая сущность, описывающая имя человека.
  * Гарантирует наличие хотя бы одного непустого компонента.
  */
-public final class Name {
+final class Name {
 
     /** Фамилия (может быть null). */
     private final String lastName;
@@ -27,17 +27,14 @@ public final class Name {
             final String firstName,
             final String middleName
     ) {
-        // нормализуем входные значения
         final String ln = normalize(lastName);
         final String fn = normalize(firstName);
         final String mn = normalize(middleName);
-        // проверяем наличие хотя бы одного поля
         if (ln == null && fn == null && mn == null) {
             throw new IllegalArgumentException(
                     "Ошибка: хотя бы одно поле должно быть задано"
             );
         }
-        // присваиваем нормализованные значения
         this.lastName = ln;
         this.firstName = fn;
         this.middleName = mn;
@@ -103,19 +100,15 @@ public final class Name {
     @Override
     public final String toString() {
         final StringBuilder sb = new StringBuilder();
-        // добавляем фамилию если есть
         if (lastName != null) {
             sb.append(lastName).append(" ");
         }
-        // добавляем имя если есть
         if (firstName != null) {
             sb.append(firstName).append(" ");
         }
-        // добавляем отчество если есть
         if (middleName != null) {
             sb.append(middleName);
         }
-        // удаляем лишние пробелы
         return sb.toString().trim();
     }
 }

@@ -11,7 +11,7 @@ import java.util.Scanner;
  * @author Студент
  * @version 2.0
  */
-public final class Main {
+final class Main {
 
     private static final int TAB_SIZE = 4;
     private static final int MAX_LINE_LENGTH = 64;

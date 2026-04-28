@@ -6,7 +6,7 @@ import java.util.Random;
  * Сущность для безопасной передачи секрета между хранителями.
  * Текст секрета изменяется при каждой передаче.
  */
-public final class Secret {
+final class Secret {
 
     /** Текст секрета (приватный, доступ только при выводе). */
     private final String secretText;
@@ -53,19 +53,15 @@ public final class Secret {
             final Secret original,
             final String newKeeperName
     ) {
-        // вывод информации о передаче
         System.out.println(
                 original.keeperName
                         + " сказал что "
                         + original.secretText
         );
-        // сохраняем ссылку на предыдущего
         this.previousKeeper = original;
         this.keeperName = newKeeperName;
         this.orderNumber = original.orderNumber + 1;
-        // модифицируем текст секрета
         this.secretText = changeText(original.secretText);
-        // устанавливаем связь в обратную сторону
         original.nextKeeper = this;
     }
 
@@ -75,16 +71,13 @@ public final class Secret {
      * @return изменённый текст
      */
     private String changeText(final String text) {
-        // короткие тексты не изменяем
         if (text == null || text.length() < 3) {
             return text;
         }
-        // вычисляем количество изменений: 0..10% от длины
         final int maxChanges = text.length()
                 * MAX_CHANGE_PERCENT / 100;
         final int changes = RANDOM.nextInt(maxChanges + 1);
         String result = text;
-        // добавляем случайные символы в случайные позиции
         for (int i = 0; i < changes; i++) {
             final int pos = RANDOM.nextInt(result.length() + 1);
             final char c = (char) ('a'
@@ -111,7 +104,6 @@ public final class Secret {
     public final int getPeopleAfter() {
         int count = 0;
         Secret current = this.nextKeeper;
-        // считаем всех следующих в цепочке
         while (current != null) {
             count++;
             current = current.nextKeeper;
@@ -125,12 +117,10 @@ public final class Secret {
      * @return имя хранителя или "Нет" если не найден
      */
     public final String getNthPerson(final int n) {
-        // текущий хранитель
         if (n == 0) {
             return this.keeperName;
         }
         Secret current = this;
-        // поиск вперёд по цепочке
         if (n > 0) {
             for (int i = 0; i < n; i++) {
                 if (current.nextKeeper == null) {
@@ -139,7 +129,6 @@ public final class Secret {
                 current = current.nextKeeper;
             }
         } else {
-            // поиск назад по цепочке
             for (int i = 0; i < Math.abs(n); i++) {
                 if (current.previousKeeper == null) {
                     return "Нет";
